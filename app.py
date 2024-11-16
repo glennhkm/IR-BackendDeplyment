@@ -109,38 +109,6 @@ def search():
             { "$match": {"news_data.Kategori": category} } if category != "All" else None,
             { "$project": { "news_data._id": 0, "news_data.Isi Berita": 0 } }
         ]
-        
-        # pipeline = [
-        #     {    
-        #         "$match": {
-        #             "$expr": {
-        #                 "$eq": [
-        #                     {
-        #                         "$size": {
-        #                             "$filter": {
-        #                                 "input": query_indices,
-        #                                 "as": "index",
-        #                                 "cond": { "$ne": [{ "$arrayElemAt": ["$tfidf_vector", "$$index"] }, 0] }
-        #                             }
-        #                         }
-        #                     },
-        #                     len(query_indices)
-        #                 ]
-        #             }
-        #         }
-        #     },
-        #     {
-        #         "$lookup": {
-        #             "from": "news_data",
-        #             "localField": "Document_id",
-        #             "foreignField": "_id",
-        #             "as": "news_data"
-        #         }
-        #     },
-        #     { "$unwind": "$news_data" },
-        #     { "$match": {"news_data.Kategori": category} } if category != "All" else None,
-        #     { "$project": { "news_data._id": 0, "news_data.Isi Berita": 0 } }
-        # ]
 
         pipeline = [stage for stage in pipeline if stage is not None]
 
